@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs20.x",
+      "regions": ["all"]
+    },
+    "api/**/*.ts": {
+      "runtime": "nodejs20.x",
+      "regions": ["all"]
+    }
+  },
+  "compute": {
+    "default": "fluid"
+  },
+  "env": {
+    "NEXT_PUBLIC_VERCEL_URL": "@vercel-url",
+    "NEXT_PUBLIC_VERCEL_ENV": "@vercel-env"
+  }
+}
