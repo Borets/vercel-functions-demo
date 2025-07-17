@@ -177,7 +177,7 @@ export default function PerformanceDashboard() {
                 <YAxis />
                 <Tooltip 
                   labelFormatter={(ts) => new Date(ts).toLocaleTimeString()}
-                  formatter={(value: number) => [`$${value.toFixed(6)}`, '']}
+                  formatter={(value: number) => [`$${typeof value === 'number' ? value.toFixed(6) : '0.000000'}`, '']}
                 />
                 <Legend />
                 <Line type="monotone" dataKey="fluidCost" stroke="#3b82f6" name="Fluid Compute" />
@@ -199,7 +199,7 @@ export default function PerformanceDashboard() {
                 <YAxis />
                 <Tooltip 
                   labelFormatter={(ts) => new Date(ts).toLocaleTimeString()}
-                  formatter={(value: number) => [`${value.toFixed(0)}ms`, '']}
+                  formatter={(value: number) => [`${typeof value === 'number' ? value.toFixed(0) : '0'}ms`, '']}
                 />
                 <Legend />
                 <Line type="monotone" dataKey="fluidResponseTime" stroke="#3b82f6" name="Fluid Compute" />
@@ -229,7 +229,7 @@ export default function PerformanceDashboard() {
                   </div>
                   <div className="text-sm text-gray-600 space-y-1">
                     <div>Time: {result.executionTime}ms</div>
-                    {result.costMetrics && (
+                    {result.costMetrics && result.costMetrics.totalCost !== undefined && (
                       <div>Cost: ${result.costMetrics.totalCost.toFixed(6)}</div>
                     )}
                     {result.fluidMetrics && (

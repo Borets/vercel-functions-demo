@@ -76,6 +76,14 @@ export default function CostTracker() {
     const totalInvocations = costData.reduce((sum, item) => sum + item.invocationCost, 0);
     const total = totalActiveCpu + totalMemory + totalInvocations;
 
+    if (total === 0) {
+      return [
+        { name: 'Active CPU', value: 0, color: '#3b82f6' },
+        { name: 'Memory', value: 0, color: '#10b981' },
+        { name: 'Invocations', value: 0, color: '#f59e0b' },
+      ];
+    }
+
     return [
       { name: 'Active CPU', value: (totalActiveCpu / total) * 100, color: '#3b82f6' },
       { name: 'Memory', value: (totalMemory / total) * 100, color: '#10b981' },
@@ -96,11 +104,16 @@ export default function CostTracker() {
       return sum + traditionalCost;
     }, 0);
     
+    const savings = estimatedTraditionalCost - totalFluidCost;
+    const savingsPercentage = estimatedTraditionalCost > 0 
+      ? ((estimatedTraditionalCost - totalFluidCost) / estimatedTraditionalCost) * 100 
+      : 0;
+    
     return {
       fluidCost: totalFluidCost,
       traditionalCost: estimatedTraditionalCost,
-      savings: estimatedTraditionalCost - totalFluidCost,
-      savingsPercentage: ((estimatedTraditionalCost - totalFluidCost) / estimatedTraditionalCost) * 100,
+      savings,
+      savingsPercentage,
     };
   };
 
@@ -165,7 +178,10 @@ export default function CostTracker() {
             <div>
               <p className="text-sm text-purple-600">Avg CPU Usage</p>
               <p className="text-2xl font-bold text-purple-800">
-                {(costData.reduce((sum, item) => sum + item.cpuUtilization, 0) / costData.length).toFixed(0)}%
+                {costData.length > 0 
+                  ? (costData.reduce((sum, item) => sum + item.cpuUtilization, 0) / costData.length).toFixed(0)
+                  : '0'
+                }%
               </p>
             </div>
             <Activity className="w-8 h-8 text-purple-600" />

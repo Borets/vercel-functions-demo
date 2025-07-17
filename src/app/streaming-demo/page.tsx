@@ -171,7 +171,7 @@ export default function StreamingDemo() {
                   <div className="bg-purple-50 rounded-lg p-4">
                     <div className="text-sm text-purple-600">Avg Chunk Time</div>
                     <div className="text-2xl font-bold text-purple-800">
-                      {metrics.averageChunkTime.toFixed(0)}ms
+                      {metrics.averageChunkTime ? metrics.averageChunkTime.toFixed(0) : '0'}ms
                     </div>
                   </div>
                   
@@ -189,7 +189,7 @@ export default function StreamingDemo() {
                     <li>• Active CPU Time: {metrics.fluidMetrics.activeCpuTime}ms</li>
                     <li>• Idle Time: {metrics.fluidMetrics.idleTime}ms</li>
                     <li>• Memory Usage: {metrics.fluidMetrics.memoryUsed}MB</li>
-                    <li>• Total Cost: ${metrics.costMetrics.totalCost.toFixed(6)}</li>
+                    <li>• Total Cost: ${metrics.costMetrics.totalCost ? metrics.costMetrics.totalCost.toFixed(6) : '0.000000'}</li>
                   </ul>
                 </div>
                 
@@ -197,7 +197,7 @@ export default function StreamingDemo() {
                   <h4 className="font-medium mb-2 text-blue-900">💡 Streaming Benefits</h4>
                   <ul className="text-sm text-blue-800 space-y-1">
                     <li>• Low CPU usage during streaming (only {metrics.fluidMetrics.cpuUtilization}% active)</li>
-                    <li>• {((metrics.fluidMetrics.idleTime / metrics.fluidMetrics.totalExecutionTime) * 100).toFixed(1)}% idle time cost savings</li>
+                    <li>• {metrics.fluidMetrics.totalExecutionTime > 0 ? ((metrics.fluidMetrics.idleTime / metrics.fluidMetrics.totalExecutionTime) * 100).toFixed(1) : '0'}% idle time cost savings</li>
                     <li>• Perfect for real-time applications and chat interfaces</li>
                     <li>• Persistent connections with minimal resource usage</li>
                   </ul>
